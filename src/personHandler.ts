@@ -5,9 +5,9 @@ import fs from "fs";
  * IPerson describes the shape of the persons array in the json file
  */
 interface IPerson {
-	name: string;
-	surname: string;
-	gender: "male" | "female";
+  name: string;
+  surname: string;
+  gender: "male" | "female";
 }
 
 /**
@@ -21,8 +21,8 @@ type TPersonUnion = IPerson | IPerson[];
  * A helper type to allow for either a person or a person array
  */
 interface TPersonSuccess<T extends TPersonUnion> {
-	type: "ok";
-	data: T;
+  type: "ok";
+  data: T;
 }
 
 /**
@@ -30,8 +30,8 @@ interface TPersonSuccess<T extends TPersonUnion> {
  * A result type of either a person array or an unknown error
  */
 type TPersonResult<T extends TPersonUnion> =
-	| TPersonSuccess<T>
-	| { type: "err"; err: unknown };
+  | TPersonSuccess<T>
+  | { type: "err"; err: unknown };
 
 /**
  * @description
@@ -39,14 +39,14 @@ type TPersonResult<T extends TPersonUnion> =
  * @returns A result type containing either the persons array or an unknown error
  */
 function readPeople(): TPersonResult<IPerson[]> {
-	try {
-		const file = fs.readFileSync("persons.json").toString();
-		const personNames = JSON.parse(file);
+  try {
+    const file = fs.readFileSync("persons.json").toString();
+    const personNames = JSON.parse(file);
 
-		return { type: "ok", data: personNames };
-	} catch (e) {
-		return { type: "err", err: e };
-	}
+    return { type: "ok", data: personNames };
+  } catch (e) {
+    return { type: "err", err: e };
+  }
 }
 
 /**
@@ -56,29 +56,29 @@ function readPeople(): TPersonResult<IPerson[]> {
  * @returns A new array of persons
  */
 function getPeople(amount: number): TPersonResult<IPerson[]> {
-	if (amount <= 0) {
-		return { type: "err", err: "Amount is less than or equal to 0" };
-	}
+  if (amount <= 0) {
+    return { type: "err", err: "Amount is less than or equal to 0" };
+  }
 
-	const result = readPeople();
-	if (result.type === "err") {
-		return result;
-	}
-	const peopleBase = result.data;
+  const result = readPeople();
+  if (result.type === "err") {
+    return result;
+  }
+  const peopleBase = result.data;
 
-	const people: IPerson[] = [];
-	for (let i = 0; i < amount; i++) {
-		const randomIndex = Math.floor(Math.random() * peopleBase.length);
-		const person = peopleBase.at(randomIndex);
+  const people: IPerson[] = [];
+  for (let i = 0; i < amount; i++) {
+    const randomIndex = Math.floor(Math.random() * peopleBase.length);
+    const person = peopleBase.at(randomIndex);
 
-		if (!person) {
-			throw Error("Random index for person was out of bounds");
-		}
+    if (!person) {
+      throw Error("Random index for person was out of bounds");
+    }
 
-		people.push(person);
-	}
+    people.push(person);
+  }
 
-	return { type: "ok", data: people };
+  return { type: "ok", data: people };
 }
 
 /**
@@ -87,17 +87,17 @@ function getPeople(amount: number): TPersonResult<IPerson[]> {
  * @returns A result of either a single person or an unknown error
  */
 function createPerson(): TPersonResult<IPerson> {
-	const peopleResult = getPeople(1);
-	if (peopleResult.type === "err") {
-		return peopleResult;
-	}
+  const peopleResult = getPeople(1);
+  if (peopleResult.type === "err") {
+    return peopleResult;
+  }
 
-	const person = peopleResult.data.at(0);
-	if (!person) {
-		return { type: "err", err: "Unable to retrieve person at index 0" };
-	}
+  const person = peopleResult.data.at(0);
+  if (!person) {
+    return { type: "err", err: "Unable to retrieve person at index 0" };
+  }
 
-	return { type: "ok", data: person };
+  return { type: "ok", data: person };
 }
 
 /**
@@ -107,7 +107,7 @@ function createPerson(): TPersonResult<IPerson> {
  * @returns A result of either a person array or an unknown error
  */
 function createPeople(amount: number): TPersonResult<IPerson[]> {
-	return getPeople(amount);
+  return getPeople(amount);
 }
 
 export { createPerson, createPeople };
