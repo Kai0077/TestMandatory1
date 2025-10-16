@@ -2,6 +2,8 @@
 	"name": "test_mandatory_1",
 	"type": "module",
 	"scripts": {
+		"format": "prettier --write .",
+		"lint": "eslint .",
 		"test": "vitest",
 		"dev": "tsx watch src/index.ts",
 		"build": "tsc",
@@ -9,8 +11,7 @@
 	},
 	"dependencies": {
 		"express": "^5.1.0",
-		"prettier": "^3.6.2",
-		"vitest": "^3.2.4"
+		"prettier": "^3.6.2"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.37.0",
@@ -20,6 +21,7 @@
 		"globals": "^16.4.0",
 		"tsx": "^4.7.1",
 		"typescript": "^5.8.3",
-		"typescript-eslint": "^8.46.0"
+		"typescript-eslint": "^8.46.0",
+		"vitest": "^3.2.4"
 	}
 }
