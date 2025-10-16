@@ -1,23 +1,25 @@
 {
-  "name": "test_mandatory_1",
-  "type": "module",
-  "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
-  },
-  "dependencies": {
-    "express": "^5.1.0",
-    "prettier": "^3.6.2"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.37.0",
-    "@types/express": "^5.0.3",
-    "@types/node": "^20.11.17",
-    "eslint": "^9.37.0",
-    "globals": "^16.4.0",
-    "tsx": "^4.7.1",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.46.0"
-  }
+	"name": "test_mandatory_1",
+	"type": "module",
+	"scripts": {
+		"test": "vitest",
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js"
+	},
+	"dependencies": {
+		"express": "^5.1.0",
+		"prettier": "^3.6.2",
+		"vitest": "^3.2.4"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.37.0",
+		"@types/express": "^5.0.3",
+		"@types/node": "^20.11.17",
+		"eslint": "^9.37.0",
+		"globals": "^16.4.0",
+		"tsx": "^4.7.1",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.46.0"
+	}
 }
