@@ -1,33 +1,93 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-
 export type TGender = "male" | "female";
 
-@Entity("person")
 export class Person {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  #id: number;
+  #name: string;
+  #surname: string;
+  #gender: TGender;
+  #cpr: string;
+  #address: string;
+  #phone: string;
+  #birthdate: Date;
 
-  @Column()
-  name!: string;
+  constructor(
+    id: number,
+    name: string,
+    surname: string,
+    gender: TGender,
+    cpr: string,
+    address: string, // Address Entity
+    phone: string,
+    birthdate: Date
+  ) {
+    this.#id = id;
+    this.#name = name;
+    this.#surname = surname;
+    this.#gender = gender;
+    this.#cpr = cpr;
+    this.#address = address;
+    this.#phone = phone;
+    this.#birthdate = birthdate;
+  }
 
-  @Column()
-  surname!: string;
+  get id(): number {
+    return this.#id;
+  }
 
-  @Column({
-    type: "enum",
-    enum: ["male", "female"],
-  })
-  gender!: TGender;
+  get name(): string {
+    return this.#name;
+  }
 
-  @Column({ unique: true })
-  cpr!: string;
+  get surname(): string {
+    return this.#surname;
+  }
 
-  @Column()
-  address!: string;
+  get gender(): TGender {
+    return this.#gender;
+  }
 
-  @Column()
-  phone!: string;
+  get cpr(): string {
+    return this.#cpr;
+  }
 
-  @Column({ type: "date" })
-  birthdate!: Date;
+  get address(): string {
+    return this.#address;
+  }
+
+  get phone(): string {
+    return this.#phone;
+  }
+
+  get birthdate(): Date {
+    return this.#birthdate;
+  }
+
+  set name(value: string) {
+    if (!value) {
+      throw new Error("Name cannot be empty");
+    }
+    this.#name = value;
+  }
+
+  set surname(value: string) {
+    if (!value) {
+      throw new Error("Surname cannot be empty");
+    }
+    this.#surname = value;
+  }
+
+  set gender(value: TGender) {
+    if (value !== "male" && value !== "female") {
+      throw new Error("Invalid gender");
+    }
+    this.#gender = value;
+  }
+
+  set address(value: string) {
+    this.#address = value;
+  }
+
+  set phone(value: string) {
+    this.#phone = value;
+  }
 }
