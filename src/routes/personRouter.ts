@@ -6,10 +6,6 @@ router.get("/cpr", (req, res) => {
   res.send({ message: "" })
 });
 
-router.get("/cpr", (req, res) => {
-  res.send({ message: "" })
-});
-
 router.get("/name-surname-gender", (req, res) => {
   res.send({ message: ""})
 });
