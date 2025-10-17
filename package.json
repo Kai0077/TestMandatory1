@@ -2,6 +2,9 @@
   "name": "test_mandatory_1",
   "type": "module",
   "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "test": "vitest",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
@@ -18,6 +21,7 @@
     "globals": "^16.4.0",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.46.0"
+    "typescript-eslint": "^8.46.0",
+    "vitest": "^3.2.4"
   }
 }
