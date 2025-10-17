@@ -26,6 +26,5 @@ lerna-debug.log*
 
 # misc
 .DS_Store
+dataInit.ts
 
-# package-lock
-package-lock.json
