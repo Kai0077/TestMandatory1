@@ -8,7 +8,13 @@ class Adress {
 
   // TODO: add Town
 
-  constructor(id: number, street: string, number: string, floor: string, door: string) {
+  constructor(
+    id: number,
+    street: string,
+    number: string,
+    floor: string,
+    door: string,
+  ) {
     this.#id = id;
     // this.#town = town;
     this.#street = street;
