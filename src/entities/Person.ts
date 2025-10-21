@@ -78,9 +78,6 @@ export class Person {
   }
 
   set gender(value: TGender) {
-    if (value !== "male" && value !== "female") {
-      throw new Error("Invalid gender");
-    }
     this.#gender = value;
   }
 
