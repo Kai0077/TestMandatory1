@@ -3,8 +3,10 @@
   "type": "module",
   "scripts": {
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint": "eslint .",
-    "test": "vitest",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest run",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
@@ -16,6 +18,7 @@
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.6",
     "express": "^5.1.0",
+    "jiti": "^2.6.1",
     "prettier": "^3.6.2"
   },
   "devDependencies": {

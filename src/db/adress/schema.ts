@@ -3,7 +3,7 @@ import {
   int,
   text,
   integer,
-  foreignKey,
+  //foreignKey,
 } from "drizzle-orm/sqlite-core";
 // TODO: import TownTable
 
