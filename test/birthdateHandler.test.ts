@@ -3,7 +3,7 @@ import { createDate, validateDate } from "../src/birthdateHandler.js";
 
 describe("Positive", () => {
   it("Should create a valid random date", () => {
-    const date = createDate(); 
+    const date = createDate();
     const isValid = validateDate(date);
 
     assert(isValid, "The created date should be valid");
