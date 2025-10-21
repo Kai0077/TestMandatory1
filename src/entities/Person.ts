@@ -1,6 +1,5 @@
+import { type TGender } from "../personHandler.js";
 import { Adress } from "./adress.js";
-
-export type TGender = "male" | "female";
 
 export class Person {
   #id: number;
@@ -65,14 +64,14 @@ export class Person {
   }
 
   set name(value: string) {
-    if (!value) {
+    if (value.length === 0) {
       throw new Error("Name cannot be empty");
     }
     this.#name = value;
   }
 
   set surname(value: string) {
-    if (!value) {
+    if (value.length === 0) {
       throw new Error("Surname cannot be empty");
     }
     this.#surname = value;

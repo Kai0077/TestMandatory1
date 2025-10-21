@@ -1,5 +1,7 @@
 import fs from "fs";
 
+type TGender = "male" | "female";
+
 /**
  * @description
  * IPerson describes the shape of the persons array in the json file
@@ -7,7 +9,7 @@ import fs from "fs";
 interface IPerson {
   name: string;
   surname: string;
-  gender: "male" | "female";
+  gender: TGender;
 }
 
 /**
@@ -110,4 +112,4 @@ function createPeople(amount: number): TPersonResult<IPerson[]> {
   return getPeople(amount);
 }
 
-export { createPerson, createPeople };
+export { createPerson, createPeople, type TGender };
