@@ -3,7 +3,7 @@ class Adress {
   // #town: Town;
   #street: string;
   #number: string;
-  #floor: string;
+  //#floor: string;
   #door: string;
 
   // TODO: add Town
@@ -19,7 +19,7 @@ class Adress {
     // this.#town = town;
     this.#street = street;
     this.#number = number;
-    this.#floor = floor;
+    //this.#floor = floor;
     this.#door = door;
   }
 
