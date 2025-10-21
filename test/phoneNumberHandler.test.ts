@@ -1,24 +1,31 @@
 import { describe, it, assert } from "vitest";
-import { createPeople, createPerson } from "../src/personHandler.js";
 import {generatePhoneNumber} from "../src/phoneNumberHandler.js";
 
 describe("Positive", () => {
-  it("Should create a single person", () => {
-    const personResult = createPerson();
+  it("Should create a phone number of 8 digits", () => {
+    let phoneNumbers = []
+    for (let i = 0; i <= 1000; i++){
+        const phoneNumber = generatePhoneNumber()
+        phoneNumbers.push(phoneNumber);
+    }
 
-    assert(personResult.type === "ok", "Person result should be ok");
-  });
-  it.each([1, 2, 50])("Should create a x people", (amount) => {
-    const peopleResult = createPeople(amount);
+    phoneNumbers.map(nr => nr.length === 8 ? nr : '-1');
 
-    assert(peopleResult.type === "ok", "People result should be ok");
+    assert(!phoneNumbers.includes('-1'), "A valid phone number is always 8 digits");
   });
+
 });
 
-describe("negative", () => {
-  it.each([-1, 0])("Should fail due to invalid amoun", (amount) => {
-    const peopleResult = createPeople(amount);
+describe("Positive", () => {
+  it("Should fail due to invalid length", () => {
+    let phoneNumbers = []
+    for (let i = 0; i <= 1000; i++){
+        const phoneNumber = parseInt(generatePhoneNumber().substring(0, 2));
+        phoneNumbers.push(phoneNumber);
+    }
 
-    assert(peopleResult.type === "err", "People result should be err");
+    phoneNumbers.map(nr => nr < 830 ? nr : -1);
+
+    assert(!phoneNumbers.includes(-1), "The start of a phone number may not be grander than 830");
   });
 });

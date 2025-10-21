@@ -3,11 +3,9 @@
  * @returns A valid Danish phone number as string
  */
 
-function generatePhoneNumber() {
+function generatePhoneNumber(): string {
     const maxLength = 8;
-    const start = Math.floor(Math.random() * getValidStart().length);
-    
-    let finalPhoneNumber = start.toString();
+    let finalPhoneNumber = getValidStart();
 
     while (finalPhoneNumber.length < maxLength) {
         finalPhoneNumber += Math.floor(Math.random() * 10);
@@ -21,7 +19,7 @@ function generatePhoneNumber() {
  * @returns A number array
  */
 
-function getValidStart() {
+function getValidStart(): string {
     const startNumbers = [
         2,
         30,
@@ -70,29 +68,28 @@ function getValidStart() {
         829
     ]
 
+    // Range intervals. For ex. 344-349 are VALID. 350-355 are NOT VALID.
     const validRanges = [[344, 349], [356, 357], [365, 366], [485, 486], [488, 489], [493, 496], [498, 499], [542, 543], [551, 552], [571, 574], [586, 587], [597, 598], [662, 665], [692, 694], [771, 772], [782, 783], [785, 786], [788, 789], [826, 827]]
 
     /**
      * @description Grabs the intervals from the range arrays and returns the full list of all numbers included in the intervals
      * @returns A number array
      */
-    const getAllNumbersFromRanges = () : number[] => {
+
+    const getAllNumbersFromRanges = (): number[] => {
         return validRanges.map(([start, end]) => {
-            let allNumbers : number[] = []
-            for (let i = 0; i <= end - start; i++){
+            let allNumbers: number[] = []
+            for (let i = 0; i <= end - start; i++) {
                 allNumbers.push(start + i)
             }
             return allNumbers;
         }).flat();
     }
+
     const finalArray = startNumbers.concat(getAllNumbersFromRanges());
+    const validStart = Math.floor(Math.random() * finalArray.length); // Grab random start number from list
 
-    return finalArray;
+    return validStart.toString();
 }
 
-
-function run() {
-    console.log("Phone number: ", generatePhoneNumber());
-}
-
-run();
+export {generatePhoneNumber, getValidStart}
