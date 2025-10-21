@@ -15,7 +15,7 @@ describe("Positive", () => {
 });
 
 describe("negative", () => {
-  it.each([-1, 0])("Should fail due to invalid amoun", (amount) => {
+  it.each([-1, 0])("Should fail due to invalid amount", (amount) => {
     const peopleResult = createPeople(amount);
 
     assert(peopleResult.type === "err", "People result should be err");
