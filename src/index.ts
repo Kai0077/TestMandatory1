@@ -1,11 +1,9 @@
 import express from "express";
-import personRouter from "./routes/personRouter.js";
+import apiRouter from "./routes/api/index.js";
 
 const app = express();
 
-app.use(express.json());
-
-app.use("/api/person", personRouter);
+app.use("/api", apiRouter);
 
 const PORT = 8080;
 
