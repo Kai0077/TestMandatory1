@@ -1,3 +1,5 @@
+import { Adress } from "./adress.js";
+
 export type TGender = "male" | "female";
 
 export class Person {
@@ -6,7 +8,7 @@ export class Person {
   #surname: string;
   #gender: TGender;
   #cpr: string;
-  //#address: Address;
+  #adress: Adress;
   #phone: string;
   #birthdate: Date;
 
@@ -16,16 +18,16 @@ export class Person {
     surname: string,
     gender: TGender,
     cpr: string,
-    //address: Address,
+    address: Adress,
     phone: string,
-    birthdate: Date
+    birthdate: Date,
   ) {
     this.#id = id;
     this.#name = name;
     this.#surname = surname;
     this.#gender = gender;
     this.#cpr = cpr;
-    //this.#address = address;
+    this.#adress = address;
     this.#phone = phone;
     this.#birthdate = birthdate;
   }
@@ -50,9 +52,9 @@ export class Person {
     return this.#cpr;
   }
 
-  // get address(): string {
-  //   return this.#address;
-  // }
+  get adress(): Adress {
+    return this.#adress;
+  }
 
   get phone(): string {
     return this.#phone;
@@ -83,9 +85,9 @@ export class Person {
     this.#gender = value;
   }
 
-  /* set address(value: string) {
-    this.#address = value;
-  } */
+  set adress(value: Adress) {
+    this.#adress = value;
+  }
 
   set phone(value: string) {
     this.#phone = value;

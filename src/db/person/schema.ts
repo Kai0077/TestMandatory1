@@ -6,7 +6,9 @@ const personTable = sqliteTable("persons", {
   surname: text("surname").notNull(),
   gender: text("gender", { enum: ["male", "female"] }).notNull(),
   cpr: text("cpr").notNull(),
-  //address: text("address").notNull(),
+  addressId: int("address_id").notNull(),
   phone: text("phone").notNull(),
   birthdate: int("birthdate", { mode: "timestamp_ms" }).notNull(),
 });
+
+export { personTable };
