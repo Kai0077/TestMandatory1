@@ -6,7 +6,7 @@ export class Person {
   #surname: string;
   #gender: TGender;
   #cpr: string;
-  #address: string;
+  //#address: Address;
   #phone: string;
   #birthdate: Date;
 
@@ -16,7 +16,7 @@ export class Person {
     surname: string,
     gender: TGender,
     cpr: string,
-    address: string, // Address Entity
+    //address: Address,
     phone: string,
     birthdate: Date
   ) {
@@ -25,7 +25,7 @@ export class Person {
     this.#surname = surname;
     this.#gender = gender;
     this.#cpr = cpr;
-    this.#address = address;
+    //this.#address = address;
     this.#phone = phone;
     this.#birthdate = birthdate;
   }
@@ -50,9 +50,9 @@ export class Person {
     return this.#cpr;
   }
 
-  get address(): string {
-    return this.#address;
-  }
+  // get address(): string {
+  //   return this.#address;
+  // }
 
   get phone(): string {
     return this.#phone;
@@ -83,9 +83,9 @@ export class Person {
     this.#gender = value;
   }
 
-  set address(value: string) {
+  /* set address(value: string) {
     this.#address = value;
-  }
+  } */
 
   set phone(value: string) {
     this.#phone = value;
