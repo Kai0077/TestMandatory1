@@ -5,14 +5,14 @@
  * @returns {string} A random date string (YYYY-MM-DD) within the last 50 years.
  */
 function createDate() {
-    const now = new Date();
-    const oldest = new Date();
-    oldest.setFullYear(now.getFullYear() - 50);
-    const start = oldest.getTime();
-    const end = now.getTime();
-    const randomTime = start + Math.random() * (end - start);
-    const date = new Date(randomTime);
-    return date.toISOString().split("T")[0];
+  const now = new Date();
+  const oldest = new Date();
+  oldest.setFullYear(now.getFullYear() - 50);
+  const start = oldest.getTime();
+  const end = now.getTime();
+  const randomTime = start + Math.random() * (end - start);
+  const date = new Date(randomTime);
+  return date.toISOString().split("T")[0];
 }
 /**
  * Validates whether the given date string represents a realistic birthdate.
@@ -25,14 +25,12 @@ function createDate() {
  * @returns {boolean} True if the date is valid, false otherwise.
  */
 function validateDate(dateString) {
-    if (!dateString)
-        return false;
-    const date = new Date(dateString);
-    if (isNaN(date.getTime()))
-        return false;
-    const now = new Date();
-    const oldest = new Date();
-    oldest.setFullYear(now.getFullYear() - 50);
-    return date >= oldest && date <= now;
+  if (!dateString) return false;
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return false;
+  const now = new Date();
+  const oldest = new Date();
+  oldest.setFullYear(now.getFullYear() - 50);
+  return date >= oldest && date <= now;
 }
 export { createDate, validateDate };

@@ -64,7 +64,7 @@ class Adress {
   }
 
   //setfloor(floor: string) {
-    //this.#floor = floor;
+  //this.#floor = floor;
   //}
 
   setDoor(door: string) {
