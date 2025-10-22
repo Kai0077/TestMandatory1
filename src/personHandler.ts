@@ -23,11 +23,7 @@ interface IPerson extends IRawPerson {
 /**
  * Generic result type usable for any kind of data.
  */
-type Result<T> =
-  | { type: "ok"; data: T }
-  | { type: "err"; err: unknown };
-
-
+type Result<T> = { type: "ok"; data: T } | { type: "err"; err: unknown };
 
 /**
  * @description
