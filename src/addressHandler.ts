@@ -2,7 +2,7 @@ import { db } from "./db/index.js";
 import { townTable } from "./db/town/schema.js";
 import { sql } from "drizzle-orm";
 
-export interface Address {
+interface Address {
   street: string; // alphabetic characters only, 1–3 words
   number: number; // 1–999
   floor: number; // 1–99
@@ -10,13 +10,13 @@ export interface Address {
 }
 
 /** Including postal code & town name */
-export interface AddressWithTown extends Address {
+interface AddressWithTown extends Address {
   postalCode: string;
   town: string;
 }
 
 /** Town entity */
-export class Town {
+class Town {
   #id: number;
   #postalCode: string;
   #name: string;
@@ -44,7 +44,7 @@ export class Town {
 }
 
 /** Utility: random integer in [min, max] */
-export function randInt(min: number, max: number): number {
+function randInt(min: number, max: number): number {
   if (!Number.isFinite(min) || !Number.isFinite(max))
     throw new Error("randInt bounds must be finite numbers");
   if (Math.floor(min) !== min || Math.floor(max) !== max)
@@ -54,7 +54,7 @@ export function randInt(min: number, max: number): number {
 }
 
 /** Create a single alphabetic word of given length, first letter capitalized. */
-export function randomWord(len: number): string {
+ function randomWord(len: number): string {
   if (len < 1) throw new Error("word length must be >= 1");
   const letters = [] as string[];
   for (let i = 0; i < len; i++) {
@@ -66,7 +66,7 @@ export function randomWord(len: number): string {
 }
 
 /** Create a street name: 1–3 alphabetic words, each 3–12 chars. */
-export function randomStreetName(): string {
+ function randomStreetName(): string {
   const words = randInt(1, 3);
   const parts: string[] = [];
   for (let i = 0; i < words; i++) {
@@ -76,60 +76,24 @@ export function randomStreetName(): string {
 }
 
 /** Generators for each component under simplified constraints */
-export function generateStreet(): string {
+ function generateStreet(): string {
   return randomStreetName();
 }
 
-export function generateNumber(): number {
+ function generateNumber(): number {
   return randInt(1, 999);
 }
 
-export function generateFloor(): number {
+ function generateFloor(): number {
   return randInt(1, 99);
 }
 
-export function generateDoor(): number {
+ function generateDoor(): number {
   return randInt(1, 50);
 }
 
-/** Regex validators that match the simplified constraints */
-export const streetRegex = /^[A-Za-z]+(?:\s[A-Za-z]+){0,2}$/; // 1–3 words, letters only
-export const numberRegex = /^(?:[1-9]\d{0,2})$/; // 1–999
-export const floorRegex = /^(?:[1-9]\d?)$/; // 1–99
-export const doorRegex = /^(?:[1-9]|[1-4]\d|50)$/; // 1–50
-
-export function isValidStreet(value: string): boolean {
-  return streetRegex.test(value);
-}
-export function isValidNumber(value: number | string): boolean {
-  return numberRegex.test(String(value));
-}
-export function isValidFloor(value: number | string): boolean {
-  return floorRegex.test(String(value));
-}
-export function isValidDoor(value: number | string): boolean {
-  return doorRegex.test(String(value));
-}
-
-/** Validate a full Address */
-export function validateAddress(addr: Address): {
-  valid: boolean;
-  errors: string[];
-} {
-  const errors: string[] = [];
-  if (!isValidStreet(addr.street))
-    errors.push("street must be 1–3 words with letters only (A–Z)");
-  if (!isValidNumber(addr.number))
-    errors.push("number must be an integer from 1 to 999");
-  if (!isValidFloor(addr.floor))
-    errors.push("floor must be an integer from 1 to 99");
-  if (!isValidDoor(addr.door))
-    errors.push("door must be an integer from 1 to 50");
-  return { valid: errors.length === 0, errors };
-}
-
 /** Generate a random address following the simplified rules */
-export function generateAddress(partial?: Partial<Address>): Address {
+ function generateAddress(partial?: Partial<Address>): Address {
   const addr: Address = {
     street: partial?.street ?? generateStreet(),
     number: partial?.number ?? generateNumber(),
@@ -169,14 +133,14 @@ export async function getRandomTown(): Promise<Town> {
   }
 
   throw new Error(
-    "Unsupported DB interface: pass a Drizzle DB with select() or query.*.findMany()",
+    "Unsupported DB interface: pass a Drizzle DB with select() or query.*.findMany()"
   );
 }
 
 /**
  * Generate a full Address including a random town+postalCode from DB.
  */
-export async function generateAddressWithTown(): Promise<AddressWithTown> {
+async function generateAddressWithTown(): Promise<AddressWithTown> {
   const town = await getRandomTown();
   const base = generateAddress();
   return {
@@ -185,3 +149,6 @@ export async function generateAddressWithTown(): Promise<AddressWithTown> {
     town: town.getName(),
   };
 }
+
+export { generateAddress ,generateAddressWithTown };
+export type { Address, AddressWithTown };
