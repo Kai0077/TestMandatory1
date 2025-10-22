@@ -103,12 +103,7 @@ function generateAddress(partial?: Partial<Address>): Address {
   return addr;
 }
 
-/** Print an address single line format */
-export function addressToString(addr: Address): string {
-  return `${addr.street} ${addr.number}, ${addr.floor}. ${addr.door}`;
-}
-
-export async function getRandomTown(): Promise<Town> {
+async function getRandomTown(): Promise<Town> {
   try {
     const rows = await db
       .select()
