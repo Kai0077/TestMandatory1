@@ -206,7 +206,3 @@ export async function generateAddressWithTown<
     town: town.getName(),
   };
 }
-
-// Example usage:
-const createAddress = await generateAddressWithTown(db, townTable, sql);
-console.log(createAddress);
