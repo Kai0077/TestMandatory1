@@ -63,9 +63,9 @@ class Adress {
     this.#number = number;
   }
 
-  setfloor(floor: string) {
-    this.#floor = floor;
-  }
+  //setfloor(floor: string) {
+  //this.#floor = floor;
+  //}
 
   setDoor(door: string) {
     this.#door = door;
