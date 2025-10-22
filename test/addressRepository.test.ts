@@ -32,7 +32,11 @@ describe("addressRepository (fetching)", () => {
       assert("id" in address, "Fetched address should have an ID");
       assert("street" in address, "Fetched address should have a street");
     } else {
-      assert.strictEqual(address, undefined, "Should return undefined if ID not found");
+      assert.strictEqual(
+        address,
+        undefined,
+        "Should return undefined if ID not found",
+      );
     }
   });
 });
