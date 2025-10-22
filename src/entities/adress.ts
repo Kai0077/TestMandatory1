@@ -1,25 +1,26 @@
+import { Town } from "./town.js";
+
 class Adress {
   #id: number;
-  // #town: Town;
+  #town: Town;
   #street: string;
   #number: string;
-  //#floor: string;
+  #floor: string;
   #door: string;
-
-  // TODO: add Town
 
   constructor(
     id: number,
+    town: Town,
     street: string,
     number: string,
     floor: string,
     door: string,
   ) {
     this.#id = id;
-    // this.#town = town;
+    this.#town = town;
     this.#street = street;
     this.#number = number;
-    //this.#floor = floor;
+    this.#floor = floor;
     this.#door = door;
   }
 
@@ -29,9 +30,9 @@ class Adress {
     return this.#id;
   }
 
-  // getTown() {
-  //     return this.#town;
-  // }
+  getTown() {
+    return this.#town;
+  }
 
   getStreet() {
     return this.#street;
@@ -42,7 +43,7 @@ class Adress {
   }
 
   getFloor() {
-    return this.getFloor;
+    return this.#floor;
   }
 
   getDoor() {
@@ -51,9 +52,9 @@ class Adress {
 
   //Setters:
 
-  // setTown(town: Town) {
-  //     this.#town = town;
-  // }
+  setTown(town: Town) {
+    this.#town = town;
+  }
 
   setStreet(street: string) {
     this.#street = street;
