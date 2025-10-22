@@ -3,9 +3,10 @@ import {
   int,
   text,
   integer,
-  //foreignKey,
+  foreignKey,
 } from "drizzle-orm/sqlite-core";
-// TODO: import TownTable
+
+import { townTable } from "../town/schema.js";
 
 const adressTable = sqliteTable(
   "adresses",
@@ -17,13 +18,13 @@ const adressTable = sqliteTable(
     floor: text("floor").notNull(),
     door: text("door").notNull(),
   },
-  // (table) => [
-  //     foreignKey({
-  //         name: "town_fk",
-  //         columns: [table.town],
-  //         foreignColumns: [townTable.id]
-  //     })
-  // ]
+  (table) => [
+    foreignKey({
+      name: "town_fk",
+      columns: [table.town],
+      foreignColumns: [townTable.id],
+    }),
+  ],
 );
 
 export { adressTable };
