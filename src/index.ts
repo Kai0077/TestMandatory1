@@ -1,11 +1,12 @@
 import express from "express";
-import { db } from "./db/index.js";
+import apiRouter from "./routes/api/index.js";
 
 const app = express();
-app.get("/", async (_req, res) => {
-  const ddd = await db.query.townTable.findMany();
-  res.send();
-});
+
+app.use("/api", apiRouter);
+
 const PORT = 8080;
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
