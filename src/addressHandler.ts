@@ -54,7 +54,7 @@ function randInt(min: number, max: number): number {
 }
 
 /** Create a single alphabetic word of given length, first letter capitalized. */
- function randomWord(len: number): string {
+function randomWord(len: number): string {
   if (len < 1) throw new Error("word length must be >= 1");
   const letters = [] as string[];
   for (let i = 0; i < len; i++) {
@@ -66,7 +66,7 @@ function randInt(min: number, max: number): number {
 }
 
 /** Create a street name: 1–3 alphabetic words, each 3–12 chars. */
- function randomStreetName(): string {
+function randomStreetName(): string {
   const words = randInt(1, 3);
   const parts: string[] = [];
   for (let i = 0; i < words; i++) {
@@ -76,24 +76,24 @@ function randInt(min: number, max: number): number {
 }
 
 /** Generators for each component under simplified constraints */
- function generateStreet(): string {
+function generateStreet(): string {
   return randomStreetName();
 }
 
- function generateNumber(): number {
+function generateNumber(): number {
   return randInt(1, 999);
 }
 
- function generateFloor(): number {
+function generateFloor(): number {
   return randInt(1, 99);
 }
 
- function generateDoor(): number {
+function generateDoor(): number {
   return randInt(1, 50);
 }
 
 /** Generate a random address following the simplified rules */
- function generateAddress(partial?: Partial<Address>): Address {
+function generateAddress(partial?: Partial<Address>): Address {
   const addr: Address = {
     street: partial?.street ?? generateStreet(),
     number: partial?.number ?? generateNumber(),
@@ -133,7 +133,7 @@ export async function getRandomTown(): Promise<Town> {
   }
 
   throw new Error(
-    "Unsupported DB interface: pass a Drizzle DB with select() or query.*.findMany()"
+    "Unsupported DB interface: pass a Drizzle DB with select() or query.*.findMany()",
   );
 }
 
@@ -150,5 +150,5 @@ async function generateAddressWithTown(): Promise<AddressWithTown> {
   };
 }
 
-export { generateAddress ,generateAddressWithTown };
+export { generateAddress, generateAddressWithTown };
 export type { Address, AddressWithTown };
