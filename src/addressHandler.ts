@@ -144,41 +144,28 @@ export function addressToString(addr: Address): string {
   return `${addr.street} ${addr.number}, ${addr.floor}. ${addr.door}`;
 }
 
-export async function getRandomTown<
-  DB,
-  TownRow extends { id: number; postalCode: string; name: string },
->(db: DB & { select: Function }, townTable: unknown, sql?: any): Promise<Town> {
+export async function getRandomTown(): Promise<Town> {
   try {
-    if (typeof (db as any).select === "function") {
-      const _sql = sql ?? (await import("drizzle-orm")).sql;
-      const rows: TownRow[] = await (db as any)
-        .select()
-        .from(townTable as any)
-        .orderBy(_sql`RANDOM()`)
-        .limit(1);
-      if (rows.length === 0) throw new Error("No towns in database");
-      const r = rows[0];
-      return new Town(r.id, String(r.postalCode), String(r.name));
-    }
-  } catch (_) {
+    const rows = await db
+      .select()
+      .from(townTable)
+      .orderBy(sql`RANDOM()`)
+      .limit(1);
+    if (rows.length === 0) throw new Error("No towns in database");
+    const r = rows[0];
+    return new Town(r.id, String(r.postalCode), String(r.name));
+  } catch (e) {
+    console.log(e);
     /* fall through to next approach */
   }
 
-  // Attempt drizzle query API variant if present
   try {
-    const query = (db as any).query;
-    if (query) {
-      const tableName = (townTable as any)?._.name ?? "townTable";
-      const coll = query[tableName];
-      if (!coll || typeof coll.findMany !== "function")
-        throw new Error("query API not available");
-      const rows: TownRow[] = await coll.findMany({ limit: 1 });
-      if (rows.length === 0) throw new Error("No towns in database");
-      const r = rows[0];
-      return new Town(r.id, String(r.postalCode), String(r.name));
-    }
+    const rows = await db.query.townTable.findMany({ limit: 1 });
+    if (rows.length === 0) throw new Error("No towns in database");
+    const r = rows[0];
+    return new Town(r.id, String(r.postalCode), String(r.name));
   } catch (err) {
-    throw err;
+    console.log(err);
   }
 
   throw new Error(
@@ -189,17 +176,9 @@ export async function getRandomTown<
 /**
  * Generate a full Address including a random town+postalCode from DB.
  */
-export async function generateAddressWithTown<
-  DB,
-  TownRow extends { id: number; postalCode: string; name: string },
->(
-  db: (DB & { select: Function }) | any,
-  townTable: unknown,
-  sql?: any,
-  partial: Partial<Address> = {},
-): Promise<AddressWithTown> {
-  const town = await getRandomTown<DB, TownRow>(db, townTable, sql);
-  const base = generateAddress(partial);
+export async function generateAddressWithTown(): Promise<AddressWithTown> {
+  const town = await getRandomTown();
+  const base = generateAddress();
   return {
     ...base,
     postalCode: town.getPostalCode(),
