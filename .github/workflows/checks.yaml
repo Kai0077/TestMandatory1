@@ -28,6 +28,8 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+    env:
+      DB_FILE_NAME: "file:./test.db"
 
     steps:
       - name: Checkout code
