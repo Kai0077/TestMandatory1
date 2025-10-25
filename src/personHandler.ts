@@ -105,4 +105,4 @@ function createPeople(amount: number): Result<IPerson[]> {
   return getPeople(amount);
 }
 
-export { createPerson, createPeople, type TGender };
+export { createPerson, createPeople, type TGender, type IPerson};
