@@ -55,7 +55,10 @@ describe("Positive", () => {
 
     // female CPR must end with an even number
     const lastDigitFemale = Number(cprFemale.data.slice(-1));
-    assert(lastDigitFemale % 2 === 0, "Female CPR should end with an even digit");
+    assert(
+      lastDigitFemale % 2 === 0,
+      "Female CPR should end with an even digit",
+    );
 
     // and male CPR must end with an odd number
     const lastDigitMale = Number(cprMale.data.slice(-1));
