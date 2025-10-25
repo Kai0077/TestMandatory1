@@ -1,16 +1,8 @@
-import { type IPerson, createPerson } from "./personHandler.js";
-/**
- * @description
- * Generic result type usable for any kind of data.
- */
+import { type IPerson } from "./personHandler.js";
+
 type Result<T> = { type: "ok"; data: T } | { type: "err"; err: unknown };
 
-/**
- * @description
- * Pads a number with a leading zero if needed (e.g. 5 -> "05").
- * @param n - The number or string to pad.
- * @returns The padded string of length 2.
- */
+// helper function to pad numbers to 2 digits for date formatting
 function pad2(n: number | string): string {
   return String(n).padStart(2, "0");
 }
@@ -23,7 +15,8 @@ function pad2(n: number | string): string {
  */
 function toDDMMYY(birthdate: string): string {
   const [yyyy, mm, dd] = birthdate.split("-");
-  if (!yyyy || !mm || !dd) throw new Error("Invalid birthdate format, expected YYYY-MM-DD");
+  if (!yyyy || !mm || !dd)
+    throw new Error("Invalid birthdate format, expected YYYY-MM-DD");
   const yy = yyyy.slice(-2);
   return `${pad2(dd)}${pad2(mm)}${yy}`;
 }
@@ -52,7 +45,8 @@ function randomDigits(): string {
  * @returns The corresponding CPR gender digit.
  */
 function genderLastDigit(gender: IPerson["gender"]): string {
-  const possibleDigits = gender === "female" ? [0, 2, 4, 6, 8] : [1, 3, 5, 7, 9];
+  const possibleDigits =
+    gender === "female" ? [0, 2, 4, 6, 8] : [1, 3, 5, 7, 9];
   const index = Math.floor(Math.random() * possibleDigits.length);
   return String(possibleDigits[index]);
 }

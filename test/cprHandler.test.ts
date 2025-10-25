@@ -108,7 +108,7 @@ describe("Negative", () => {
       birthdate: "1995-09-09",
     };
 
-    // generates cpr for the same person but gender is male 
+    // generates cpr for the same person but gender is male
     const maleCprResult = createCpr({ ...person, gender: "male" });
 
     assert(maleCprResult.type === "ok", "CPR generation should be ok");
