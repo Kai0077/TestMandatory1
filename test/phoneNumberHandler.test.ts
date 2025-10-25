@@ -18,8 +18,8 @@ describe("Positive", () => {
   });
 });
 
-describe("Positive", () => {
-  it("Should fail due to invalid length", () => {
+describe("Negative", () => {
+  it("Should fail due to invalid first two digits of the phone number", () => {
     const phoneNumbers = [];
     for (let i = 0; i <= 1000; i++) {
       const phoneNumber = parseInt(generatePhoneNumber().substring(0, 2));
