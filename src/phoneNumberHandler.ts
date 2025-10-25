@@ -72,4 +72,4 @@ function getValidStart(): string {
   return validStart.toString();
 }
 
-export { generatePhoneNumber, getValidStart };
+export { generatePhoneNumber };
