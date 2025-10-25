@@ -18,15 +18,11 @@ describe("Positive", () => {
     const personResult = createPerson();
     assert(personResult.type === "ok", "Person result should be ok");
 
-    if (personResult.type === "ok") {
-      const cprResult = createCpr(personResult.data);
-      assert(cprResult.type === "ok", "CPR result should be ok");
+    const cprResult = createCpr(personResult.data);
+    assert(cprResult.type === "ok", "CPR result should be ok");
 
-      if (cprResult.type === "ok") {
-        const isValid = validateCprForPerson(personResult.data, cprResult.data);
-        assert(isValid, "Generated CPR should be valid for the person");
-      }
-    }
+    const isValid = validateCprForPerson(personResult.data, cprResult.data);
+    assert(isValid, "Generated CPR should be valid for the person");
   });
 
   /**
@@ -58,16 +54,12 @@ describe("Positive", () => {
     assert(cprMale.type === "ok", "Male CPR creation should be ok");
 
     // female CPR must end with an even number
-    if (cprFemale.type === "ok") {
-      const lastDigit = Number(cprFemale.data.slice(-1));
-      assert(lastDigit % 2 === 0, "Female CPR should end with an even digit");
-    }
+    const lastDigitFemale = Number(cprFemale.data.slice(-1));
+    assert(lastDigitFemale % 2 === 0, "Female CPR should end with an even digit");
 
     // and male CPR must end with an odd number
-    if (cprMale.type === "ok") {
-      const lastDigit = Number(cprMale.data.slice(-1));
-      assert(lastDigit % 2 === 1, "Male CPR should end with an odd digit");
-    }
+    const lastDigitMale = Number(cprMale.data.slice(-1));
+    assert(lastDigitMale % 2 === 1, "Male CPR should end with an odd digit");
   });
 });
 
@@ -86,13 +78,11 @@ describe("Negative", () => {
     const personResult = createPerson();
     assert(personResult.type === "ok", "Person result should be ok");
 
-    if (personResult.type === "ok") {
-      // intentionally wrong birthdate part (01-01-99)
-      const wrongCpr = "0101991234";
-      const isValid = validateCprForPerson(personResult.data, wrongCpr);
+    // intentionally wrong birthdate part (01-01-99)
+    const wrongCpr = "0101991234";
+    const isValid = validateCprForPerson(personResult.data, wrongCpr);
 
-      assert(!isValid, "CPR with wrong birthdate should be invalid");
-    }
+    assert(!isValid, "CPR with wrong birthdate should be invalid");
   });
 
   /**
@@ -113,10 +103,8 @@ describe("Negative", () => {
 
     assert(maleCprResult.type === "ok", "CPR generation should be ok");
 
-    if (maleCprResult.type === "ok") {
-      // checking that a CPR made for a male person is rejected when validated against a female person both with same info just gender is different
-      const isValid = validateCprForPerson(person, maleCprResult.data);
-      assert(!isValid, "CPR with mismatched gender should be invalid");
-    }
+    // checking that a CPR made for a male person is rejected when validated against a female person both with same info just gender is different
+    const isValid = validateCprForPerson(person, maleCprResult.data);
+    assert(!isValid, "CPR with mismatched gender should be invalid");
   });
 });
