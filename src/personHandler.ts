@@ -1,23 +1,20 @@
 import fs from "fs";
-import { createDate, validateDate } from "./birthdateHandler.js";
+import { createDate } from "./birthdateHandler.js";
+import { createCpr } from "./cprHandler.js";
+import { generatePhoneNumber } from "./phoneNumberHandler.js";
+import { generateAddress } from "./addressHandler.js";
+import { Person } from "./entities/Person.js";
 
 type TGender = "male" | "female";
 
 /**
  * @description
- * IPerson describes the shape of the persons array in the json file
+ * IRawPerson describes the shape of the persons array in the json file
  */
 interface IRawPerson {
   name: string;
   surname: string;
   gender: TGender;
-}
-
-/**
- * Person shape returned by our API (includes generated birthdate).
- */
-interface IPerson extends IRawPerson {
-  birthdate: string; // YYYY-MM-DD
 }
 
 /**
@@ -44,7 +41,7 @@ function readPeople(): Result<IRawPerson[]> {
 /**
  * getPeople creates a new array of random persons and attaches a birthdate.
  */
-function getPeople(amount: number): Result<IPerson[]> {
+function getRawPeople(amount: number): Result<IRawPerson[]> {
   if (amount <= 0) {
     return { type: "err", err: "Amount is less than or equal to 0" };
   }
@@ -53,22 +50,12 @@ function getPeople(amount: number): Result<IPerson[]> {
   if (result.type === "err") return result;
 
   const base = result.data;
-  const people: IPerson[] = [];
+  const people: IRawPerson[] = [];
 
   for (let i = 0; i < amount; i++) {
     const randomIndex = Math.floor(Math.random() * base.length);
-    const picked = base.at(randomIndex);
-    if (!picked) throw new Error("Random index for person was out of bounds");
-
-    const birthdate = createDate();
-    if (!validateDate(birthdate)) {
-      throw new Error("Generated invalid birthdate");
-    }
-
-    const person: IPerson = {
-      ...picked,
-      birthdate,
-    };
+    const person = base.at(randomIndex);
+    if (!person) throw new Error("Random index for person was out of bounds");
 
     people.push(person);
   }
@@ -78,11 +65,62 @@ function getPeople(amount: number): Result<IPerson[]> {
 
 /**
  * @description
+ * getPeople retrieves x amount of raw people using getRawPeople. It then converts them to Person entities,
+ * using other handlers like address, birthday and cpr to create a complete person.
+ * @param amount - Determines how many people to create.
+ */
+async function getPeople(amount: number): Promise<Result<Person[]>> {
+  const rawPersonResults = getRawPeople(amount);
+  if (rawPersonResults.type === "err") {
+    return rawPersonResults;
+  }
+
+  const personResults = await Promise.all(
+    rawPersonResults.data.map(async (person, i) => {
+      const birthdate = createDate();
+      const cprResult = createCpr(birthdate, person.gender);
+
+      if (cprResult.type === "err") {
+        return { type: "err", err: "Could not create cpr number" };
+      }
+
+      const address = await generateAddress();
+      const phoneNumber = generatePhoneNumber();
+
+      const personEntity = new Person(
+        i,
+        person.name,
+        person.surname,
+        person.gender,
+        cprResult.data,
+        address,
+        phoneNumber,
+        birthdate,
+      );
+
+      return { type: "ok", data: personEntity };
+    }),
+  );
+
+  const personErrResult = personResults.find(
+    (personResult) => personResult.type === "err",
+  );
+  if (personErrResult) {
+    return { type: "err", err: "Not every person could be created" };
+  }
+
+  const people = personResults.map((personResult) => personResult.data!);
+
+  return { type: "ok", data: people };
+}
+
+/**
+ * @description
  * createPerson creates a single person
  * @returns A result of either a single person or an unknown error
  */
-function createPerson(): Result<IPerson> {
-  const peopleResult = getPeople(1);
+async function createPerson(): Promise<Result<Person>> {
+  const peopleResult = await getPeople(1);
   if (peopleResult.type === "err") {
     return peopleResult;
   }
@@ -101,8 +139,8 @@ function createPerson(): Result<IPerson> {
  * @param amount - Determines how many people to create, must be higher than 0
  * @returns A result of either a person array or an unknown error
  */
-function createPeople(amount: number): Result<IPerson[]> {
+function createPeople(amount: number): Promise<Result<Person[]>> {
   return getPeople(amount);
 }
 
-export { createPerson, createPeople, type TGender, type IPerson };
+export { createPerson, createPeople, type TGender };

@@ -4,17 +4,17 @@ class Adress {
   #id: number;
   #town: Town;
   #street: string;
-  #number: string;
-  #floor: string;
-  #door: string;
+  #number: number;
+  #floor: number;
+  #door: number;
 
   constructor(
     id: number,
     town: Town,
     street: string,
-    number: string,
-    floor: string,
-    door: string,
+    number: number,
+    floor: number,
+    door: number,
   ) {
     this.#id = id;
     this.#town = town;

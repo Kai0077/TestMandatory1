@@ -1,47 +1,8 @@
 import { db } from "./db/index.js";
 import { townTable } from "./db/town/schema.js";
 import { sql } from "drizzle-orm";
-
-interface Address {
-  street: string; // alphabetic characters only, 1–3 words
-  number: number; // 1–999
-  floor: number; // 1–99
-  door: number; // 1–50
-}
-
-/** Including postal code & town name */
-interface AddressWithTown extends Address {
-  postalCode: string;
-  town: string;
-}
-
-/** Town entity */
-class Town {
-  #id: number;
-  #postalCode: string;
-  #name: string;
-
-  constructor(id: number, postalCode: string, name: string) {
-    this.#id = id;
-    this.#postalCode = postalCode;
-    this.#name = name;
-  }
-  getID() {
-    return this.#id;
-  }
-  getPostalCode() {
-    return this.#postalCode;
-  }
-  getName() {
-    return this.#name;
-  }
-  setPostalCode(postalCode: string) {
-    this.#postalCode = postalCode;
-  }
-  setName(name: string) {
-    this.#name = name;
-  }
-}
+import { Adress } from "./entities/adress.js";
+import { Town } from "./entities/town.js";
 
 /** Utility: random integer in [min, max] */
 function randInt(min: number, max: number): number {
@@ -92,17 +53,6 @@ function generateDoor(): number {
   return randInt(1, 50);
 }
 
-/** Generate a random address following the simplified rules */
-function generateAddress(partial?: Partial<Address>): Address {
-  const addr: Address = {
-    street: partial?.street ?? generateStreet(),
-    number: partial?.number ?? generateNumber(),
-    floor: partial?.floor ?? generateFloor(),
-    door: partial?.door ?? generateDoor(),
-  };
-  return addr;
-}
-
 async function getRandomTown(): Promise<Town> {
   try {
     const rows = await db
@@ -132,18 +82,15 @@ async function getRandomTown(): Promise<Town> {
   );
 }
 
-/**
- * Generate a full Address including a random town+postalCode from DB.
- */
-async function generateAddressWithTown(): Promise<AddressWithTown> {
+/** Generate a random address following the simplified rules */
+async function generateAddress(): Promise<Adress> {
   const town = await getRandomTown();
-  const base = generateAddress();
-  return {
-    ...base,
-    postalCode: town.getPostalCode(),
-    town: town.getName(),
-  };
+  const street = generateStreet();
+  const number = generateNumber();
+  const floor = generateFloor();
+  const door = generateDoor();
+
+  return new Adress(1, town, street, number, floor, door);
 }
 
-export { generateAddress, generateAddressWithTown };
-export type { Address, AddressWithTown };
+export { generateAddress };
