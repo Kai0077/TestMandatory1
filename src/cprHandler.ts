@@ -4,7 +4,7 @@ type Result<T> = { type: "ok"; data: T } | { type: "err"; err: unknown };
 
 // helper function to pad numbers to 2 digits for date formatting
 function pad2(n: number | string): string {
-	return String(n).padStart(2, "0");
+  return String(n).padStart(2, "0");
 }
 
 /**
@@ -14,11 +14,11 @@ function pad2(n: number | string): string {
  * @returns The date string formatted as DDMMYY.
  */
 function toDDMMYY(birthdate: string): string {
-	const [yyyy, mm, dd] = birthdate.split("-");
-	if (!yyyy || !mm || !dd)
-		throw new Error("Invalid birthdate format, expected YYYY-MM-DD");
-	const yy = yyyy.slice(-2);
-	return `${pad2(dd)}${pad2(mm)}${yy}`;
+  const [yyyy, mm, dd] = birthdate.split("-");
+  if (!yyyy || !mm || !dd)
+    throw new Error("Invalid birthdate format, expected YYYY-MM-DD");
+  const yy = yyyy.slice(-2);
+  return `${pad2(dd)}${pad2(mm)}${yy}`;
 }
 
 /**
@@ -28,11 +28,11 @@ function toDDMMYY(birthdate: string): string {
  * @returns A string of 3 random numeric digits.
  */
 function randomDigits(): string {
-	let digits = "";
-	for (let i = 0; i < 3; i++) {
-		digits += Math.floor(Math.random() * 10);
-	}
-	return digits;
+  let digits = "";
+  for (let i = 0; i < 3; i++) {
+    digits += Math.floor(Math.random() * 10);
+  }
+  return digits;
 }
 
 /**
@@ -45,10 +45,10 @@ function randomDigits(): string {
  * @returns The corresponding CPR gender digit.
  */
 function genderLastDigit(gender: TGender): string {
-	const possibleDigits =
-		gender === "female" ? [0, 2, 4, 6, 8] : [1, 3, 5, 7, 9];
-	const index = Math.floor(Math.random() * possibleDigits.length);
-	return String(possibleDigits[index]);
+  const possibleDigits =
+    gender === "female" ? [0, 2, 4, 6, 8] : [1, 3, 5, 7, 9];
+  const index = Math.floor(Math.random() * possibleDigits.length);
+  return String(possibleDigits[index]);
 }
 
 /**
@@ -62,16 +62,19 @@ function genderLastDigit(gender: TGender): string {
  * @param personGender - The gender of a person.
  * @returns A result type containing either the CPR string or an unknown error.
  */
-function createCpr(personBirthday: string, personGender: TGender): Result<string> {
-	try {
-		const datePart = toDDMMYY(personBirthday);
-		const randomPart = randomDigits();
-		const genderDigit = genderLastDigit(personGender);
-		const cpr = `${datePart}${randomPart}${genderDigit}`;
-		return { type: "ok", data: cpr };
-	} catch (e) {
-		return { type: "err", err: e };
-	}
+function createCpr(
+  personBirthday: string,
+  personGender: TGender,
+): Result<string> {
+  try {
+    const datePart = toDDMMYY(personBirthday);
+    const randomPart = randomDigits();
+    const genderDigit = genderLastDigit(personGender);
+    const cpr = `${datePart}${randomPart}${genderDigit}`;
+    return { type: "ok", data: cpr };
+  } catch (e) {
+    return { type: "err", err: e };
+  }
 }
 
 /**
@@ -86,20 +89,24 @@ function createCpr(personBirthday: string, personGender: TGender): Result<string
  * @param cpr - The CPR number to validate.
  * @returns True if the CPR matches the person, false otherwise.
  */
-function validateCprForPerson(PersonBirthday: string, personGender: TGender, cpr: string): boolean {
-	const normalized = cpr.replace("-", "");
-	if (!/^\d{10}$/.test(normalized)) return false;
+function validateCprForPerson(
+  PersonBirthday: string,
+  personGender: TGender,
+  cpr: string,
+): boolean {
+  const normalized = cpr.replace("-", "");
+  if (!/^\d{10}$/.test(normalized)) return false;
 
-	const expectedPrefix = toDDMMYY(PersonBirthday);
-	if (normalized.slice(0, 6) !== expectedPrefix) return false;
+  const expectedPrefix = toDDMMYY(PersonBirthday);
+  if (normalized.slice(0, 6) !== expectedPrefix) return false;
 
-	const lastDigit = Number(normalized.slice(-1));
-	const isEven = lastDigit % 2 === 0;
+  const lastDigit = Number(normalized.slice(-1));
+  const isEven = lastDigit % 2 === 0;
 
-	if (personGender === "female" && !isEven) return false;
-	if (personGender === "male" && isEven) return false;
+  if (personGender === "female" && !isEven) return false;
+  if (personGender === "male" && isEven) return false;
 
-	return true;
+  return true;
 }
 
 export { createCpr, validateCprForPerson };
