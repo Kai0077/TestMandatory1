@@ -1,76 +1,76 @@
 import { Town } from "./town.js";
 
 class Adress {
-  #id: number;
-  #town: Town;
-  #street: string;
-  #number: string;
-  #floor: string;
-  #door: string;
+	#id: number;
+	#town: Town;
+	#street: string;
+	#number: number;
+	#floor: number;
+	#door: number;
 
-  constructor(
-    id: number,
-    town: Town,
-    street: string,
-    number: string,
-    floor: string,
-    door: string,
-  ) {
-    this.#id = id;
-    this.#town = town;
-    this.#street = street;
-    this.#number = number;
-    this.#floor = floor;
-    this.#door = door;
-  }
+	constructor(
+		id: number,
+		town: Town,
+		street: string,
+		number: number,
+		floor: number,
+		door: number,
+	) {
+		this.#id = id;
+		this.#town = town;
+		this.#street = street;
+		this.#number = number;
+		this.#floor = floor;
+		this.#door = door;
+	}
 
-  // Getters:
+	// Getters:
 
-  getID() {
-    return this.#id;
-  }
+	getID() {
+		return this.#id;
+	}
 
-  getTown() {
-    return this.#town;
-  }
+	getTown() {
+		return this.#town;
+	}
 
-  getStreet() {
-    return this.#street;
-  }
+	getStreet() {
+		return this.#street;
+	}
 
-  getNumber() {
-    return this.#number;
-  }
+	getNumber() {
+		return this.#number;
+	}
 
-  getFloor() {
-    return this.#floor;
-  }
+	getFloor() {
+		return this.#floor;
+	}
 
-  getDoor() {
-    return this.#door;
-  }
+	getDoor() {
+		return this.#door;
+	}
 
-  //Setters:
+	//Setters:
 
-  setTown(town: Town) {
-    this.#town = town;
-  }
+	setTown(town: Town) {
+		this.#town = town;
+	}
 
-  setStreet(street: string) {
-    this.#street = street;
-  }
+	setStreet(street: string) {
+		this.#street = street;
+	}
 
-  setNumber(number: string) {
-    this.#number = number;
-  }
+	setNumber(number: string) {
+		this.#number = number;
+	}
 
-  setfloor(floor: string) {
-    this.#floor = floor;
-  }
+	setfloor(floor: string) {
+		this.#floor = floor;
+	}
 
-  setDoor(door: string) {
-    this.#door = door;
-  }
+	setDoor(door: string) {
+		this.#door = door;
+	}
 }
 
 export { Adress };
