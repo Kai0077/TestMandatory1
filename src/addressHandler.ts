@@ -63,9 +63,8 @@ async function getRandomTown(): Promise<Town> {
     if (rows.length === 0) throw new Error("No towns in database");
     const r = rows[0];
     return new Town(r.id, String(r.postalCode), String(r.name));
-  } catch (e) {
-    console.log(e);
-    /* fall through to next approach */
+  } catch (err) {
+    if (process.env.NODE_ENV === "development") console.debug(err);
   }
 
   try {
@@ -74,7 +73,7 @@ async function getRandomTown(): Promise<Town> {
     const r = rows[0];
     return new Town(r.id, String(r.postalCode), String(r.name));
   } catch (err) {
-    console.log(err);
+    if (process.env.NODE_ENV === "development") console.debug(err);
   }
 
   throw new Error(
