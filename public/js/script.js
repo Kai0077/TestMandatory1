@@ -66,10 +66,6 @@ const handlePersonData = (data) => {
     }
     if (item.address !== undefined || item.street !== undefined) {
       const address = item.address ?? item;
-      const personCard = document.importNode(
-        document.getElementById("personTemplate").content,
-        true,
-      );
 
       personCard.querySelector(".address").classList.remove("hidden");
       personCard.querySelector(".streetValue").textContent =

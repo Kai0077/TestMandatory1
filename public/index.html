@@ -20,6 +20,7 @@
           <div id="person">
             <input type="radio" name="fake-data" id="chkPerson" checked />
             <input
+              data-testid="people-amount"
               type="number"
               id="txtNumberPersons"
               min="1"
@@ -49,17 +50,17 @@
             </select>
           </div>
           <div id="submit">
-            <input type="submit" value="Generate" />
+            <input data-testid="generate" type="submit" value="Generate" />
           </div>
         </fieldset>
       </form>
-      <section id="output" class="hidden"></section>
+      <section data-testid="output" id="output" class="hidden"></section>
     </main>
     <footer>
-      <p>&copy; 2024 Arturo Mora-Rioja</p>
+      <p></p>
     </footer>
     <template id="personTemplate">
-      <article class="personCard">
+      <article data-testid="person" class="personCard">
         <p class="hidden cpr" grid-area="leftColumn">CPR:</p>
         <p class="hidden cprValue" grid-area="rightColumn"></p>
         <p class="hidden firstName" grid-area="leftColumn">First name:</p>
@@ -70,6 +71,7 @@
         <p class="hidden genderValue" grid-area="rightColumn"></p>
         <p class="hidden dob" grid-area="leftColumn">Date of birth:</p>
         <p class="hidden dobValue" grid-area="rightColumn"></p>
+
         <p class="hidden address" grid-area="leftColumn">Address:</p>
         <!-- <div> -->
         <!-- Street, number, floor and door -->
