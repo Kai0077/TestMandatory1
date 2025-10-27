@@ -9,7 +9,7 @@ export class Person {
   #cpr: string;
   #adress: Adress;
   #phone: string;
-  #birthdate: Date;
+  #birthdate: string;
 
   constructor(
     id: number,
@@ -19,7 +19,7 @@ export class Person {
     cpr: string,
     address: Adress,
     phone: string,
-    birthdate: Date,
+    birthdate: string,
   ) {
     this.#id = id;
     this.#name = name;
@@ -59,7 +59,7 @@ export class Person {
     return this.#phone;
   }
 
-  get birthdate(): Date {
+  get birthdate(): string {
     return this.#birthdate;
   }
 
