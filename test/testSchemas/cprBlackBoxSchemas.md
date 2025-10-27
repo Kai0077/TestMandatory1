@@ -4,7 +4,7 @@
 
 ### cprHandler:
 ___
-#### The 10 Numeric Digits Rule
+#### The 10 Numeric Digits for CPR number Rule
 
 
 |Partition type|Partitions|Test case values|Expected output|Boundary values|Test case values|
@@ -52,7 +52,7 @@ ___
 * For length of full date of birth: `12127` `121277` `1212770` `121` `1` `12` `1212` `12127` `121277` 
 ___
 
-#### The 4 last random Numbers with Gender Rule
+#### The last 4 random numbers with Gender Rule
 
 
 |Partition type|Partitions|Test case values|Expected output|Boundary values|Test case values|
@@ -72,4 +72,38 @@ ___
 * For length of 4 last digits: `1` `333` `2034` `33320` `333203`
 * For gender 'female': `0` `1` `6` `7` `8` `9`
 * For gender 'male': `0` `1` `2` `5` `7` `9`
+___
+
+#### Date of Birth matching CPR date
+
+|Partition type|Partitions|Test case values|Expected output|Boundary values|Test case values|
+|-|--:|--:|--:|--:|--:|
+|Invalid|not numeric digits|" ", &, `@` -, +, a-z, A-Z, æ, Æ, ø, Ø, å, Å, "1212770123"|Error|N/A|N/A|
+|Valid|Female DoB = first 6 digits of CPR|female: DoB = 17-06-1976, cpr = 1706760124|Valid|N/A|N/A|
+|Invalid|Female DoB = first 6 digits of CPR|female: DoB = 17-06-1976, cpr = 1707660124|Error|N/A|N/A|
+|Valid|Male DoB = first 6 digits of CPR|male: DoB = 04-11-1978, cpr = 0411780123|Valid|N/A|N/A|
+|Invalid|Male DoB = first 6 digits of CPR|male: DoB = 04-11-1978, cpr = 1411780123|Error|N/A|N/A|
+
+
+#### List of test cases:
+* Not Numeric: `a` `z` `æ` `ø` `å` `&` `@` `+` `-` `" "` `""` `"1212770123"`
+* Positive: `female: DoB = 17-06-1976, cpr = 1706760124` `male: DoB = 04-11-1978, cpr = 0411780123` 
+* Negative: `female: DoB = 17-06-1976, cpr = 1106760124` `male: DoB = 04-11-1978, cpr = 1411780123` 
+___
+
+#### Gender matching CPR date
+
+|Partition type|Partitions|Test case values|Expected output|Boundary values|Test case values|
+|-|--:|--:|--:|--:|--:|
+|Invalid|not numeric digits|" ", &, `@` -, +, a-z, A-Z, æ, Æ, ø, Ø, å, Å, "1212770123"|Error|N/A|N/A|
+|Valid|Female DoB = first 6 digits of CPR|female: DoB = 17-06-1976, cpr = 1706760124|Valid|N/A|N/A|
+|Invalid|Female DoB = first 6 digits of CPR|female: DoB = 17-06-1976, cpr = 1706760123|Error|N/A|N/A|
+|Valid|Male DoB = first 6 digits of CPR|male: DoB = 04-11-1978, cpr = 0411780123|Valid|N/A|N/A|
+|Invalid|Male DoB = first 6 digits of CPR|male: DoB = 04-11-1978, cpr = 0411780128|Error|N/A|N/A|
+
+
+#### List of test cases:
+* Not Numeric: `a` `z` `æ` `ø` `å` `&` `@` `+` `-` `" "` `""` `"1212770123"`
+* Positive: `female: DoB = 17-06-1976, cpr = 1706760124` `male: DoB = 04-11-1978, cpr = 0411780123` 
+* Negative: `female: DoB = 17-06-1976, cpr = 1706760123` `male: DoB = 04-11-1978, cpr = 0411780128` 
 ___
