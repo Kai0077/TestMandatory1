@@ -52,25 +52,25 @@ class Adress {
 
   //Setters:
 
-  setTown(town: Town) {
-    this.#town = town;
-  }
-
-  setStreet(street: string) {
-    this.#street = street;
-  }
-
-  setNumber(number: string) {
-    this.#number = number;
-  }
-
+  // setTown(town: Town) {
+  //   this.#town = town;
+  // }
+  //
+  // setStreet(street: string) {
+  //   this.#street = street;
+  // }
+  //
+  // setNumber(number: string) {
+  //   this.#number = number;
+  // }
+  //
   //setfloor(floor: string) {
   //this.#floor = floor;
   //}
-
-  setDoor(door: string) {
-    this.#door = door;
-  }
+  //
+  // setDoor(door: string) {
+  //   this.#door = door;
+  // }
 }
 
 export { Adress };
