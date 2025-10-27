@@ -31,6 +31,39 @@ router.get("/name-surname-gender", async (req, res) => {
   })
 });
 
+router.get("/cpr-name-surname-gender", async (req, res) => {
+  const result = await createPerson();
+
+  if (result.type === "err") {
+    return res.status(500).json({ error: String(result.err) });
+  }
+
+  const person = result.data;
+  res.status(200).json({
+    cpr: person.cpr,
+    name: person.name,
+    surname: person.surname,
+    gender: person.gender,
+  })
+});
+
+router.get("/cpr-name-surname-gender-birth", async (req, res) => {
+  const result = await createPerson();
+
+  if (result.type === "err") {
+    return res.status(500).json({ error: String(result.err) });
+  }
+
+  const person = result.data;
+  res.status(200).json({
+    cpr: person.cpr,
+    name: person.name,
+    surname: person.surname,
+    gender: person.gender,
+    birthdate: person.birthdate,
+  })
+});
+
 router.get("/name-surname-gender-birth", async (req, res) => {
   const result = await createPerson();
 
