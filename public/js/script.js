@@ -1,36 +1,27 @@
-let baseUrl = "";
+document.querySelector("#frmGenerate").addEventListener("submit", (e) => {
+  e.preventDefault();
 
-fetch("api/config")
-  .then((response) => response.json())
-  .then((config) => {
-    baseUrl = config.baseUrl;
+  // The endpoint is inferred from the selected option
+  let endpoint = "/";
+  if (e.target.chkPerson.checked) {
+    const numPersons = parseInt(e.target.txtNumberPersons.value);
+    endpoint += numPersons > 1 ? "persons?amount=" + numPersons : "person";
+  } else {
+    endpoint += e.target.cmbPartialOptions.value;
+  }
 
-    document.querySelector("#frmGenerate").addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      // The endpoint is inferred from the selected option
-      let endpoint = "/";
-      if (e.target.chkPerson.checked) {
-        const numPersons = parseInt(e.target.txtNumberPersons.value);
-        endpoint += numPersons > 1 ? "persons?amount=" + numPersons : "person";
+  // API call
+  fetch(endpoint)
+    .then((response) => {
+      if (!response.ok) {
+        handleError();
       } else {
-        endpoint += e.target.cmbPartialOptions.value;
+        return response.json();
       }
-
-      // API call
-      fetch(baseUrl + endpoint)
-        .then((response) => {
-          if (!response.ok) {
-            handleError();
-          } else {
-            return response.json();
-          }
-        })
-        .then(handlePersonData)
-        .catch(handleError);
-    });
-  })
-  .catch(() => handleError());
+    })
+    .then(handlePersonData)
+    .catch(handleError);
+});
 
 const handlePersonData = (data) => {
   const output = document.querySelector("#output");
