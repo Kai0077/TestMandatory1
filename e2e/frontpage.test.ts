@@ -12,7 +12,7 @@ test("Has correct title", async ({ page }) => {
     await page.goto("http://localhost:8080/");
     await page.getByTestId("people-amount").fill(amount.toString());
 
-    await page.getByTestId("generate").click();
+    page.getByTestId("generate").click();
 
     await page.waitForResponse((response) =>
       response.url().includes("/person"),
