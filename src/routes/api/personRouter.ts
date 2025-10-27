@@ -105,11 +105,9 @@ router.get("/address", async (req, res) => {
       },
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: `Failed to generate address: ${error instanceof Error ? error.message : String(error)}`,
-      });
+    res.status(500).json({
+      error: `Failed to generate address: ${error instanceof Error ? error.message : String(error)}`,
+    });
   }
 });
 
@@ -121,11 +119,9 @@ router.get("/phone", (req, res) => {
       phone: phoneNumber,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: `Failed to generate phone number: ${error instanceof Error ? error.message : String(error)}`,
-      });
+    res.status(500).json({
+      error: `Failed to generate phone number: ${error instanceof Error ? error.message : String(error)}`,
+    });
   }
 });
 
@@ -158,11 +154,9 @@ router.get("/person", async (req, res) => {
       },
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: `Unexpected server error: ${error instanceof Error ? error.message : String(error)}`,
-      });
+    res.status(500).json({
+      error: `Unexpected server error: ${error instanceof Error ? error.message : String(error)}`,
+    });
   }
 });
 
@@ -202,11 +196,9 @@ router.get("/persons", async (req, res) => {
 
     res.status(200).json(persons);
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: `Failed to generate persons: ${error instanceof Error ? error.message : String(error)}`,
-      });
+    res.status(500).json({
+      error: `Failed to generate persons: ${error instanceof Error ? error.message : String(error)}`,
+    });
   }
 });
 
