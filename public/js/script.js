@@ -1,6 +1,6 @@
 let baseUrl = "";
 
-fetch("http://localhost:8080/api/config")
+fetch("api/config")
   .then((response) => response.json())
   .then((config) => {
     baseUrl = config.baseUrl;
