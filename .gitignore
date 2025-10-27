@@ -29,5 +29,5 @@ lerna-debug.log*
 dataInit.ts
 
 #output
-dist
+*dist
 
