@@ -2,7 +2,7 @@
 
 ## Partitions and 3-value boundaries analysis
 
-### CPR Handler:
+### CPR & Birthdate Handler:
 
 ---
 
