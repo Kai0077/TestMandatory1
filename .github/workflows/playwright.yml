@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      DB_FILE_NAME: ${{secret.DB_FILENAME}}
+      DB_FILE_NAME: ${{ secrets.DB_FILENAME }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
