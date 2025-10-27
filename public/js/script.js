@@ -1,27 +1,36 @@
-document.querySelector("#frmGenerate").addEventListener("submit", (e) => {
-  e.preventDefault();
+let baseUrl = "";
 
-  // The endpoint is inferred from the selected option
-  let endpoint = "/";
-  if (e.target.chkPerson.checked) {
-    const numPersons = parseInt(e.target.txtNumberPersons.value);
-    endpoint += numPersons > 1 ? "persons?amount=" + numPersons : "person";
-  } else {
-    endpoint += e.target.cmbPartialOptions.value;
-  }
+fetch("api/config")
+    .then((response) => response.json())
+    .then((config) => {
+      baseUrl = config.baseUrl;
 
-  // API call
-  fetch(endpoint)
-    .then((response) => {
-      if (!response.ok) {
-        handleError();
-      } else {
-        return response.json();
-      }
+      document.querySelector("#frmGenerate").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // The endpoint is inferred from the selected option
+        let endpoint = "/";
+        if (e.target.chkPerson.checked) {
+          const numPersons = parseInt(e.target.txtNumberPersons.value);
+          endpoint += numPersons > 1 ? "persons?amount=" + numPersons : "person";
+        } else {
+          endpoint += e.target.cmbPartialOptions.value;
+        }
+
+        // API call
+        fetch(baseUrl + endpoint)
+            .then((response) => {
+              if (!response.ok) {
+                handleError();
+              } else {
+                return response.json();
+              }
+            })
+            .then(handlePersonData)
+            .catch(handleError);
+      });
     })
-    .then(handlePersonData)
-    .catch(handleError);
-});
+    .catch(() => handleError());
 
 const handlePersonData = (data) => {
   const output = document.querySelector("#output");
@@ -33,8 +42,8 @@ const handlePersonData = (data) => {
 
   data.forEach((item) => {
     const personCard = document.importNode(
-      document.getElementById("personTemplate").content,
-      true,
+        document.getElementById("personTemplate").content,
+        true,
     );
     if (item.cpr !== undefined) {
       const cprValue = personCard.querySelector(".cprValue");
@@ -68,16 +77,16 @@ const handlePersonData = (data) => {
     if (item.address !== undefined || item.street !== undefined) {
       const address = item.address ?? item;
       const personCard = document.importNode(
-        document.getElementById("personTemplate").content,
-        true,
+          document.getElementById("personTemplate").content,
+          true,
       );
 
       personCard.querySelector(".address").classList.remove("hidden");
       personCard.querySelector(".streetValue").textContent =
-        `${address.street} ${address.number}, ${address.floor}.${address.door}`;
+          `${address.street} ${address.number}, ${address.floor}.${address.door}`;
       personCard.querySelector(".streetValue").classList.remove("hidden");
       personCard.querySelector(".townValue").textContent =
-        `${address.town.postalCode} ${address.town.name}`;
+          `${address.town.postalCode} ${address.town.name}`;
       personCard.querySelector(".townValue").classList.remove("hidden");
 
       document.querySelector("#output").appendChild(personCard);
