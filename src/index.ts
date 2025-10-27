@@ -1,7 +1,13 @@
 import express from "express";
 import apiRouter from "./routes/api/index.js";
+import path from "path";
 
 const app = express();
+
+app.use(express.json());
+
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api", apiRouter);
 
