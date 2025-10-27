@@ -65,8 +65,6 @@ async function getRandomTown(): Promise<Town> {
     return new Town(r.id, String(r.postalCode), String(r.name));
   } catch (err) {
     if (process.env.NODE_ENV === "development") console.debug(err);
-    //console.log(err);
-    /* fall through to next approach */
   }
 
   try {
@@ -76,7 +74,6 @@ async function getRandomTown(): Promise<Town> {
     return new Town(r.id, String(r.postalCode), String(r.name));
   } catch (err) {
     if (process.env.NODE_ENV === "development") console.debug(err);
-    //console.log(err);
   }
 
   throw new Error(
